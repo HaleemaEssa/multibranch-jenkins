@@ -8,7 +8,9 @@ pipeline {
           agent any
           steps {
             sh 'echo "edge2"
-           sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
+            sh 'imagename='haleema/docker-edge1:latest''
+            sh 'docker stop $(docker ps | awk -v image=$imagename '$2 == image {print $1}')'
+           //sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
           }
     }
 stage('Run b/w  Edge1 & cloud') {
@@ -19,8 +21,8 @@ stage('Run b/w  Edge1 & cloud') {
           steps {
             sh 'echo "edge2"'
             git branch: 'main', url: 'https://github.com/HaleemaEssa/jenkins-edge2.git'
-            //sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
-           // sh 'docker build -t haleema/docker-edge2:latest .'
+            //sh 'docker stop  a56987f86712; docker rm  a56987f86712'
+            sh 'docker build -t haleema/docker-edge2:latest .'
             sh 'docker run -v "${PWD}:/data" -t haleema/docker-edge2'
           }
     }
