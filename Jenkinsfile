@@ -8,8 +8,9 @@ pipeline {
           agent any
           steps {
             sh 'echo "edge2"'
-            sh 'imagename='haleema/docker-edge1:latest''
-            sh 'docker stop $(docker ps | awk -v image=$imagename '$2 == image {print $1}')'
+            //sh 'imagename='haleema/docker-edge1:latest''
+            //sh 'docker stop $(docker ps | awk -v image=$imagename '$2 == image {print $1}')'
+            sh 'docker stop  3f2a2c348174'
            //sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
           }
     }
