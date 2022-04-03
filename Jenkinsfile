@@ -1,3 +1,9 @@
+pipeline {
+  environment {
+        DOCKERHUB_CREDENTIALS=credentials('haleema-dockerhub')
+    }
+  agent none
+  stages {
 stage('Run b/w  Edge1 & cloud') {
       parallel {
     
@@ -42,3 +48,5 @@ stage('Login to Dockerhub') {
         }
         } 
       }
+  }
+}
