@@ -4,6 +4,13 @@ pipeline {
     }
   agent none
   stages {
+    stage('On-Edge2-Run') {
+          agent any
+          steps {
+            sh 'echo "edge2"
+           sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
+          }
+    }
 stage('Run b/w  Edge1 & cloud') {
       parallel {
     
@@ -12,8 +19,8 @@ stage('Run b/w  Edge1 & cloud') {
           steps {
             sh 'echo "edge2"'
             git branch: 'main', url: 'https://github.com/HaleemaEssa/jenkins-edge2.git'
-            sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
-            sh 'docker build -t haleema/docker-edge2:latest .'
+            //sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
+           // sh 'docker build -t haleema/docker-edge2:latest .'
             sh 'docker run -v "${PWD}:/data" -t haleema/docker-edge2'
           }
     }
