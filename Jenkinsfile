@@ -44,7 +44,7 @@ stage('Login to Dockerhub') {
         stage('On-Edge2') {
           agent any
           steps {
-            sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
+            //sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
             sh 'echo "edge1-run" '
             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
           }
