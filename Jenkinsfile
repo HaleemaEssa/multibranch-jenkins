@@ -24,7 +24,7 @@ pipeline {
           //}
         //}
        
-stage('Run b/w  Edge1 & cloud') {
+stage('Run b/w  Edge2 & cloud') {
       parallel {
     
     stage('On-Edge2-Run') {
@@ -42,7 +42,7 @@ stage('Run b/w  Edge1 & cloud') {
           steps {
             sh 'echo "cloud" '
             git branch: 'main', url: 'https://github.com/HaleemaEssa/jenkins-cloud.git'
-            sh 'docker build -t haleema/docker-cloud:latest .'
+           // sh 'docker build -t haleema/docker-cloud:latest .'
             sh 'docker run -v "${PWD}:/data" -t haleema/docker-cloud'
           }
     }
