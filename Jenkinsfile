@@ -14,6 +14,27 @@ pipeline {
            //sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
           }
     }
+    stage('Login to Dockerhub') {
+      parallel {
+
+        stage('On-Edge2') {
+          agent any
+          steps {
+            //sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
+            sh 'echo "edge1-run" '
+            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+          }
+        }
+
+        stage('On-Cloud') {
+          agent {label 'aws'}
+          steps {
+            sh 'echo "run-pi" '
+            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+          }
+        }
+        } 
+      }
 stage('Run b/w  Edge1 & cloud') {
       parallel {
     
@@ -38,26 +59,7 @@ stage('Run b/w  Edge1 & cloud') {
     }
       }
     }
-stage('Login to Dockerhub') {
-      parallel {
 
-        stage('On-Edge2') {
-          agent any
-          steps {
-            //sh 'docker stop  haleema/docker-edge1; docker rm  haleema/docker-edge1'
-            sh 'echo "edge1-run" '
-            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-          }
-        }
-
-        stage('On-Cloud') {
-          agent {label 'aws'}
-          steps {
-            sh 'echo "run-pi" '
-            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-          }
-        }
-        } 
-      }
+    
   }
 }
